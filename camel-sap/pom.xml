@@ -30,9 +30,9 @@
 	<properties>
 		<maven.compiler.target>17</maven.compiler.target>
 		<maven.compiler.source>17</maven.compiler.source>
-		<maven-surefire-plugin-version>2.22.2</maven-surefire-plugin-version>
+		<maven-surefire-plugin-version>3.5.3</maven-surefire-plugin-version>
 		<maven-bundle-plugin-version>5.1.8</maven-bundle-plugin-version>
-		<camel-version>4.14.0</camel-version>
+		<camel-version>4.14.0.redhat-00001</camel-version>
 		<camel-community-version>4.14.0</camel-community-version>
 		<camel.sap.plugin.version>4.14.0-SNAPSHOT</camel.sap.plugin.version>
 		<mockito.version>3.12.4</mockito.version>
@@ -145,11 +145,11 @@
 
 			<!-- Other -->
 
-                        <dependency>
-                               <groupId>org.slf4j</groupId>
-                               <artifactId>slf4j-simple</artifactId>
-                               <version>${slf4j-version}</version>
-                        </dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-simple</artifactId>
+				<version>${slf4j-version}</version>
+			</dependency>
 
 			<dependency>
 				<groupId>com.sun.xml.bind</groupId>
@@ -402,6 +402,20 @@
 			</properties>
 		</profile>
 		<profile>
+			<id>macosx-aarch64</id>
+			<activation>
+				<os>
+					<name>mac os x</name>
+					<arch>aarch64</arch>
+				</os>
+			</activation>
+			<properties>
+				<envClassifier>macosx-x86_64</envClassifier>
+				<envType>dylib</envType>
+				<native.lib.filename>libsapjco3</native.lib.filename>
+			</properties>
+		</profile>
+		<profile>
 			<id>repository</id>
 			<modules>
 				<!-- these 6 SAP bundles are only used at build time as per ENTESB-5801 -->
@@ -520,47 +534,4 @@
 
 		<module>camel-sap-component</module>
 	</modules>
-
-	<repositories>
-		<repository>
-			<id>brewroot</id>
-			<name>Brew Repository</name>
-			<url>http://download.eng.bos.redhat.com/brewroot/repos/jb-fuse-6.2-build/latest/maven</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-				<updatePolicy>never</updatePolicy>
-			</releases>
-		</repository>
-		<repository>
-			<id>fusesource-third-party-internal</id>
-			<url>https://repository.jboss.org/nexus/content/repositories/fs-releases/</url>
-			<layout>default</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		<repository>
-			<id>RH2</id>
-			<url>http://download.eng.bos.redhat.com/brewroot/repos/jb-fsw-6.2-build/latest/maven</url>
-			<layout>default</layout>
-		</repository>
-	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>RH2</id>
-			<url>http://download.eng.bos.redhat.com/brewroot/repos/jb-fsw-6.2-build/latest/maven</url>
-			<layout>default</layout>
-		</pluginRepository>
-		<pluginRepository>
-			<id>brewroot-plugin</id>
-			<url>http://download.eng.bos.redhat.com/brewroot/repos/jb-fuse-6.2-build/latest/maven</url>
-			<layout>default</layout>
-		</pluginRepository>
-	</pluginRepositories>
 </project>
